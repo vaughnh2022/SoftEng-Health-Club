@@ -40,7 +40,6 @@ public class MainRunner{
             }
         }
     }
-
     public static int yearValidator(){ 
         int year=0;
         while(true){ //while loop until valid year input
@@ -56,7 +55,7 @@ public class MainRunner{
                     scanner.nextLine();
                 }
             } else { //clears scanner and gives error message
-                System.out.println("Not a number");
+                System.out.println("Not a number, must be between 1-3000");
                 scanner.nextLine();
             }
         }
@@ -86,7 +85,7 @@ public class MainRunner{
                     scanner.nextLine();
                 }
             } else { //clears scanner and gives error message
-                System.out.println("Not a number");
+                System.out.println("Not a number, mut be between 1-"+maxDay);
                 scanner.nextLine();
             }
         }
@@ -108,7 +107,7 @@ public class MainRunner{
                     scanner.nextLine();
                 }
             } else { //clears scanner and gives error message
-                System.out.println("Not a number");
+                System.out.println("Not a number, must be between 1-12");
                 scanner.nextLine();
             }
         }
