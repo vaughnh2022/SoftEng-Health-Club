@@ -1,3 +1,10 @@
+/*
+ * This is the class that organizes the users command string and sends it to the next class.
+ * 
+ * This class seperates the first word of this command to interpret next action
+ * 
+ * This class returns a string that gets printed into the Main Terminal Window
+ */
 public class InputReaderClass {    
     public static String firstInputReader(String command){
         String returnString = "";

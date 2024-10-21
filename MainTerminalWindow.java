@@ -1,3 +1,12 @@
+/* 
+ * This is the main class that runs the user interface.
+ * 
+ * This class passes a string that is the users command for the project to Input Reader Class.
+ * 
+ * Input Reader Class returns an answer string that this class prints out for the user. 
+ * 
+*/
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
