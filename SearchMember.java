@@ -46,8 +46,8 @@ public class SearchMember {
         subTitle.setBounds(35, 70, 300, 25);
         subTitle.setFont(new Font("Arial", Font.PLAIN, 10));
         inputArea.setBounds(50, 110, 250, 30);
-        enterB.setBounds(50, 160, 100, 30);
-        backB.setBounds(170, 160, 100, 30);
+        backB.setBounds(50, 160, 100, 30);
+        enterB.setBounds(170, 160, 100, 30);
         errorTitle.setBounds(35, 200, 300, 25); 
         /*
          * add commands

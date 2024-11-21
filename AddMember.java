@@ -118,11 +118,11 @@ public class AddMember {
          * Buttons
          */
         JButton backButton = new JButton("Back");
-        backButton.setBounds(250, 400, 100, 30);
+        backButton.setBounds(100, 400, 100, 30);
         panel.add(backButton);
 
         JButton enterButton = new JButton("Enter");
-        enterButton.setBounds(100, 400, 100, 30);
+        enterButton.setBounds(250, 400, 100, 30);
         panel.add(enterButton);
         /*
          * load panel
