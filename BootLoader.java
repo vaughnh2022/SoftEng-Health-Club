@@ -6,6 +6,22 @@ import java.awt.Font;
 import java.awt.event.*;
 import javax.swing.*;
 public class BootLoader {
+    /*
+     * 
+     * team code (to do)
+     * 
+     */
+    static boolean userIdCheck(String id){
+        return true;
+    }
+    /*
+     * 
+     * 
+     * 
+     * GUI code (final)
+     * 
+     * 
+     */
     static final CardLayout cardLayout = new CardLayout();
     public static JPanel panelContainer = new JPanel(cardLayout);
     static JFrame loginFrame;
@@ -17,9 +33,6 @@ public class BootLoader {
         loginFrame.setSize(400,400);
         loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         bootup_init();
-    }
-    public static void switchPanel(){
-        
     }
     public static void bootup_init(){
         /*
@@ -44,11 +57,12 @@ public class BootLoader {
          */
         loginCard.add(softengTitle); loginCard.add(subTitle);
         loginCard.add(inputArea); loginCard.add(enterB);
-        panelContainer.add(loginCard,"login panel"); 
+        panelContainer.add(loginCard,"login panel");
         loginFrame.add(panelContainer); 
-        loginFrame.setVisible(true);
-
-
+        loginFrame.setVisible(true); 
+        /*
+         * action listeners
+         */
         enterB.addActionListener(
             new ActionListener(){  
                     @Override
@@ -56,13 +70,10 @@ public class BootLoader {
                     String userID = inputArea.getText();
                     if(userIdCheck(userID)){
                         //end of this page, move to homePage
-                        MainPage.startSecond(userID);
+                        MainPage.main_init(userID);
                     }  
                 }     
             }
         );
-    }
-    static boolean userIdCheck(String id){
-        return true;
     }
 }
