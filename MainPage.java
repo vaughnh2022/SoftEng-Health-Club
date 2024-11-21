@@ -6,7 +6,7 @@ public class MainPage {
      * 
      * 
      * 
-     * GUI code (final)
+     * GUI code (final) Nothing to code in this class
      * 
      * 
      * 
@@ -71,7 +71,7 @@ public class MainPage {
             new ActionListener(){  
                     @Override
                 public void actionPerformed(ActionEvent e){  
-                    //searchMember_init();
+                    SearchMember.searchMember_init();
                 }     
             }
         );

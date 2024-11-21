@@ -8,11 +8,11 @@ public class AddMember {
      * 
      * team code
      * 
-     * return "" if correct, else return a string of the error to print
+     * return "" if correct, else return a string describing error
      * 
      */
     public static String addMemberCheck(String street,String city,String state,String zip){
-        return "";
+        return "incorrect input";
     }
     /*
      * 
@@ -118,11 +118,11 @@ public class AddMember {
          * Buttons
          */
         JButton backButton = new JButton("Back");
-        backButton.setBounds(100, 400, 100, 30);
+        backButton.setBounds(250, 400, 100, 30);
         panel.add(backButton);
 
         JButton enterButton = new JButton("Enter");
-        enterButton.setBounds(250, 400, 100, 30);
+        enterButton.setBounds(100, 400, 100, 30);
         panel.add(enterButton);
         /*
          * load panel
@@ -130,6 +130,9 @@ public class AddMember {
         BootLoader.panelContainer.add(panel,"addMember");
         BootLoader.cardLayout.show(BootLoader.panelContainer, "addMember");
         BootLoader.loginFrame.setSize(500,500);BootLoader.loginFrame.setSize(500,500);
+        /*
+         * action listeners
+         */
         backButton.addActionListener(
             new ActionListener(){  
                     @Override
@@ -153,11 +156,6 @@ public class AddMember {
                     String city = cityField.getText();
                     String checkBol = addMemberCheck(street,city,state,zip);
                     if (checkBol.equals("")) {
-                        zipField.setText("");
-                        stateField.setText("");
-                        streetField.setText("");
-                        cityField.setText("");
-                        errorLabel.setText("");
                         MainPage.backToMain();
                     } else {
                         errorLabel.setText(checkBol);

@@ -1,7 +1,7 @@
-import java.awt.Font;
+import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-public class CheckinMember {
+public class SearchMember {
     /*
      * 
      * 
@@ -9,13 +9,16 @@ public class CheckinMember {
      * 
      * team code
      * 
-     * return "" if valid member Id
-     * return a string describing error if incorrect input
-     * return 'alert' if they valid checked in with an alert
+     * given a string with either a memberID or a name
+     * 
+     * 
+     * The system will return name, last name, email and account expiration date as a string to print
+     * 
+     * return "" if error
      * 
      */
-    public static String checkin(String memberID){
-        return "incorrect input";
+    public static String findMember(String text){
+        return "";
     }
     /*
      * 
@@ -27,11 +30,11 @@ public class CheckinMember {
      * 
      * 
      */
-    public static void checkin_init(){
+    public static void searchMember_init(){
         JPanel panel= new JPanel(); 
             panel.setLayout(null);
-        JLabel title=new JLabel("Member Checkin");
-        JLabel subTitle =new JLabel("please enter memberID, search member if memberID is unknown");
+        JLabel title=new JLabel("Member search");
+        JLabel subTitle =new JLabel("please enter either memberID or name of the member");
         JLabel errorTitle = new JLabel();
         JButton enterB=new JButton("Enter");
         JButton backB = new JButton("Back");
@@ -51,40 +54,35 @@ public class CheckinMember {
          */
         panel.add(title); panel.add(subTitle); panel.add(errorTitle);
         panel.add(inputArea); panel.add(enterB); panel.add(backB);
-        BootLoader.panelContainer.add(panel,"checkin panel");
-        BootLoader.cardLayout.show(BootLoader.panelContainer, "checkin panel");
+        BootLoader.panelContainer.add(panel,"search panel");
+        BootLoader.cardLayout.show(BootLoader.panelContainer, "search panel");
         BootLoader.loginFrame.setSize(400,400);
         /*
          * action listeners
          */
-        backB.addActionListener(
-            new ActionListener(){  
-                    @Override
-                public void actionPerformed(ActionEvent e){
-                    inputArea.setText("");
-                    errorTitle.setText("");  
-                    MainPage.backToMain();
-                }     
-            }
-        );
         enterB.addActionListener(
             new ActionListener(){  
                     @Override
-                public void actionPerformed(ActionEvent e){
-                    String response = checkin(inputArea.getText());
-                    if (response.equals("")) {
-                        inputArea.setText("");  
-                        MainPage.backToMain();
-                    } else if(response.equals("alert")) {
-                        alert_init();
+                public void actionPerformed(ActionEvent e){  
+                    String output = findMember(inputArea.getText());
+                    if(output.equals("")){
+                        errorTitle.setText("incorrect input");
                     } else {
-                        errorTitle.setText(response);
+                        name_init(output);
                     }
                 }     
             }
         );
+        backB.addActionListener(
+            new ActionListener(){  
+                    @Override
+                public void actionPerformed(ActionEvent e){  
+                    MainPage.backToMain();
+                }     
+            }
+        );
     }
-    public static void alert_init(){
+    public static void name_init(String person){
         /*
          * JPanel
          */
@@ -92,7 +90,7 @@ public class CheckinMember {
         panel.setLayout(null); 
 
         // Add a label with text
-        JLabel textLabel = new JLabel("ALERT: this member's membership expires within 30 days.");
+        JLabel textLabel = new JLabel(person);
         textLabel.setBounds(25, 50, 350, 25); 
         /*
          * button
@@ -104,8 +102,8 @@ public class CheckinMember {
          */
         panel.add(textLabel);
         panel.add(nextButton);
-        BootLoader.panelContainer.add(panel,"alert panel");
-        BootLoader.cardLayout.show(BootLoader.panelContainer, "alert panel");
+        BootLoader.panelContainer.add(panel,"name panel");
+        BootLoader.cardLayout.show(BootLoader.panelContainer, "name panel");
         BootLoader.loginFrame.setSize(400,400);
         /*
          * action listeners
