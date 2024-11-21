@@ -16,6 +16,12 @@ public class BootLoader {
         loginFrame=new JFrame("Softeng Club Login");
         loginFrame.setSize(400,400);
         loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        bootup_init();
+    }
+    public static void switchPanel(){
+        
+    }
+    public static void bootup_init(){
         /*
          * JThings
          */
@@ -50,8 +56,7 @@ public class BootLoader {
                     String userID = inputArea.getText();
                     if(userIdCheck(userID)){
                         //end of this page, move to homePage
-                        //MainPage.startSecond(userID);
-                        System.out.println("swag");
+                        MainPage.startSecond(userID);
                     }  
                 }     
             }
