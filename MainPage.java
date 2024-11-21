@@ -13,7 +13,7 @@ public class MainPage {
      */
     public static void backToMain(){
         BootLoader.cardLayout.show(BootLoader.panelContainer, "main");
-        BootLoader.loginFrame.setSize(400,400);
+        BootLoader.loginFrame.setSize(400,200);
     }
     public static void main_init(String userID){
         /*
@@ -55,7 +55,7 @@ public class MainPage {
          */ 
         BootLoader.panelContainer.add(panel,"main");
         BootLoader.cardLayout.show(BootLoader.panelContainer, "main");
-        BootLoader.loginFrame.setSize(400,400);
+        BootLoader.loginFrame.setSize(400,200);
         /*
          * action listeners
          */

@@ -10,6 +10,8 @@ public class BootLoader {
      * 
      * team code (to do)
      * 
+     * return true if correct userID
+     * 
      */
     static boolean userIdCheck(String id){
         return true;

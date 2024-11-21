@@ -1,5 +1,19 @@
+import java.awt.event.*;
 import javax.swing.*;
 public class AddMember {
+    /*
+     * 
+     * 
+     * 
+     * 
+     * team code
+     * 
+     * return "" if correct, else return a string of the error to print
+     * 
+     */
+    public static String addMemberCheck(String street,String city,String state,String zip){
+        return "";
+    }
     /*
      * 
      * 
@@ -22,7 +36,7 @@ public class AddMember {
          */
         JLabel titleLabel = new JLabel("Add Member");
         titleLabel.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 20));
-        titleLabel.setBounds(150, 10, 200, 30); // Position and size
+        titleLabel.setBounds(175, 10, 200, 30); // Position and size
         panel.add(titleLabel);
 
         /*
@@ -61,11 +75,11 @@ public class AddMember {
         /*
          * Address
          */
-        JLabel addressLabel = new JLabel("Address:");
-        addressLabel.setBounds(20, 170, 200, 25);
+        JLabel addressLabel = new JLabel("Address");
+        addressLabel.setBounds(200, 170, 200, 25);
         panel.add(addressLabel);
 
-        JLabel streetLabel = new JLabel("Street:");
+        JLabel streetLabel = new JLabel("Street, EX. Sheridan Rd:");
         streetLabel.setBounds(20, 210, 200, 25);
         panel.add(streetLabel);
 
@@ -73,7 +87,7 @@ public class AddMember {
         streetField.setBounds(230, 210, 200, 25);
         panel.add(streetField);
 
-        JLabel cityLabel = new JLabel("City:");
+        JLabel cityLabel = new JLabel("City, EX. Chicago:");
         cityLabel.setBounds(20, 250, 200, 25);
         panel.add(cityLabel);
 
@@ -81,7 +95,7 @@ public class AddMember {
         cityField.setBounds(230, 250, 200, 25);
         panel.add(cityField);
 
-        JLabel stateLabel = new JLabel("State:");
+        JLabel stateLabel = new JLabel("State, EX: IL:");
         stateLabel.setBounds(20, 290, 200, 25);
         panel.add(stateLabel);
 
@@ -89,7 +103,7 @@ public class AddMember {
         stateField.setBounds(230, 290, 200, 25);
         panel.add(stateField);
 
-        JLabel zipLabel = new JLabel("ZIP Code:");
+        JLabel zipLabel = new JLabel("ZIP Code, EX. 60626:");
         zipLabel.setBounds(20, 330, 200, 25);
         panel.add(zipLabel);
 
@@ -97,15 +111,18 @@ public class AddMember {
         zipField.setBounds(230, 330, 200, 25);
         panel.add(zipField);
 
+        JLabel errorLabel = new JLabel("");
+        errorLabel.setBounds(200, 360, 200, 25);
+        panel.add(errorLabel);
         /*
          * Buttons
          */
         JButton backButton = new JButton("Back");
-        backButton.setBounds(100, 340, 100, 30);
+        backButton.setBounds(100, 400, 100, 30);
         panel.add(backButton);
 
         JButton enterButton = new JButton("Enter");
-        enterButton.setBounds(250, 340, 100, 30);
+        enterButton.setBounds(250, 400, 100, 30);
         panel.add(enterButton);
         /*
          * load panel
@@ -113,5 +130,35 @@ public class AddMember {
         BootLoader.panelContainer.add(panel,"addMember");
         BootLoader.cardLayout.show(BootLoader.panelContainer, "addMember");
         BootLoader.loginFrame.setSize(500,500);BootLoader.loginFrame.setSize(500,500);
+        backButton.addActionListener(
+            new ActionListener(){  
+                    @Override
+                public void actionPerformed(ActionEvent e){  
+                    zipField.setText("");
+                    stateField.setText("");
+                    streetField.setText("");
+                    cityField.setText("");
+                    errorLabel.setText("");
+                    MainPage.backToMain();
+                }     
+            }
+        );
+        enterButton.addActionListener(
+            new ActionListener(){  
+                    @Override
+                public void actionPerformed(ActionEvent e){  
+                    String zip = zipField.getText();
+                    String state = stateField.getText();
+                    String street = streetField.getText();
+                    String city = cityField.getText();
+                    String checkBol = addMemberCheck(street,city,state,zip);
+                    if (checkBol.equals("")) {
+                        
+                    } else {
+                        errorLabel.setText(checkBol);
+                    }
+                }     
+            }
+        );
     }
 }
