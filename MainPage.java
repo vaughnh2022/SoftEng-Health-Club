@@ -79,7 +79,7 @@ public class MainPage {
             new ActionListener(){  
                     @Override
                 public void actionPerformed(ActionEvent e){  
-                    //checkinMember_init();
+                    CheckinMember.checkin_init();
                 }     
             }
         );

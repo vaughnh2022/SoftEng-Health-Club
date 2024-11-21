@@ -153,7 +153,12 @@ public class AddMember {
                     String city = cityField.getText();
                     String checkBol = addMemberCheck(street,city,state,zip);
                     if (checkBol.equals("")) {
-                        
+                        zipField.setText("");
+                        stateField.setText("");
+                        streetField.setText("");
+                        cityField.setText("");
+                        errorLabel.setText("");
+                        MainPage.backToMain();
                     } else {
                         errorLabel.setText(checkBol);
                     }
