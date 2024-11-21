@@ -13,6 +13,7 @@ public class MainPage {
      */
     public static void backToMain(){
         BootLoader.cardLayout.show(BootLoader.panelContainer, "main");
+        BootLoader.loginFrame.setSize(400,400);
     }
     public static void main_init(String userID){
         /*
@@ -54,6 +55,7 @@ public class MainPage {
          */ 
         BootLoader.panelContainer.add(panel,"main");
         BootLoader.cardLayout.show(BootLoader.panelContainer, "main");
+        BootLoader.loginFrame.setSize(400,400);
         /*
          * action listeners
          */
@@ -61,7 +63,7 @@ public class MainPage {
             new ActionListener(){  
                     @Override
                 public void actionPerformed(ActionEvent e){  
-                    //addMember_init();
+                    AddMember.addMember_init();
                 }     
             }
         );
