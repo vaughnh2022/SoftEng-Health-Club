@@ -11,7 +11,7 @@ public class CheckinMember {
      * 
      * return "" if valid member Id
      * return a string describing error if incorrect input
-     * return 'alert' if they valid checked in with an alert
+     * return 'alert' if member checked in with an alert
      * 
      */
     public static String checkin(String memberID){
