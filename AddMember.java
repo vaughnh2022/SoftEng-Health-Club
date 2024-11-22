@@ -1,5 +1,7 @@
 import java.awt.event.*;
+import java.util.Random;
 import javax.swing.*;
+import java.util.Random;
 public class AddMember {
     /*
      * 
@@ -12,6 +14,9 @@ public class AddMember {
      * 
      */
     public static String addMemberCheck(String street,String city,String state,String zip){
+        if (street.equals("a")) {
+            return "";
+        }
         return "incorrect input";
     }
     /*
@@ -156,12 +161,53 @@ public class AddMember {
                     String city = cityField.getText();
                     String checkBol = addMemberCheck(street,city,state,zip);
                     if (checkBol.equals("")) {
-                        MainPage.backToMain();
+                        Random rand = new Random();
+                        int userID=rand.nextInt(50000);
+                        String uc = ""+userID;
+                        while (uc.length()!=5) { 
+                            uc="0"+uc;
+                        }
+                        alert_init(uc);
                     } else {
                         errorLabel.setText(checkBol);
                     }
                 }     
             }
         );
+    }
+    public static void alert_init(String memberID){
+        /*
+         * JPanel
+         */
+        JPanel panel = new JPanel();
+        panel.setLayout(null); 
+
+        // Add a label with text
+        JLabel textLabel = new JLabel("This member's memberID is "+memberID);
+        textLabel.setBounds(25, 50, 350, 25); 
+        /*
+         * button
+         */
+        JButton nextButton = new JButton("Next");
+        nextButton.setBounds(150, 100, 100, 30); 
+        /*
+         * add
+         */
+        panel.add(textLabel);
+        panel.add(nextButton);
+        BootLoader.panelContainer.add(panel,"alert panel");
+        BootLoader.cardLayout.show(BootLoader.panelContainer, "alert panel");
+        BootLoader.loginFrame.setSize(400,400);
+        /*
+         * action listeners
+         */
+        nextButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MainPage.backToMain();
+            }
+        });
+
+        
     }
 }
