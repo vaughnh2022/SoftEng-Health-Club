@@ -21,6 +21,17 @@ public class AddMember {
     }
     /*
      * 
+     * team code
+     * 
+     * add new member given this information
+     * 
+     * 
+    */
+    public static void addNewMember(String street,String city,String state,String zip,String memberID){
+
+    }
+    /*
+     * 
      * 
      * 
      * 
@@ -168,6 +179,7 @@ public class AddMember {
                             uc="0"+uc;
                         }
                         alert_init(uc);
+                        addNewMember(street, city, state, zip, uc);
                     } else {
                         errorLabel.setText(checkBol);
                     }
