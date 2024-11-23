@@ -128,24 +128,34 @@ public class AddMember {
         panel.add(zipField);
 
         JLabel errorLabel = new JLabel("");
-        errorLabel.setBounds(200, 360, 200, 25);
+        errorLabel.setBounds(200, 400, 200, 25);
         panel.add(errorLabel);
+         /*
+         * Membership Length
+         */
+        JLabel membershipLabel = new JLabel("Select length by year, {.5,1,2}:");
+        membershipLabel.setBounds(20, 370, 200, 25);
+        panel.add(membershipLabel);
+
+        JTextField membershipField = new JTextField();
+        membershipField.setBounds(230, 370, 200, 25);
+        panel.add(membershipField);
         /*
          * Buttons
          */
         JButton backButton = new JButton("Back");
-        backButton.setBounds(100, 400, 100, 30);
+        backButton.setBounds(100, 450, 100, 30);
         panel.add(backButton);
 
         JButton enterButton = new JButton("Enter");
-        enterButton.setBounds(250, 400, 100, 30);
+        enterButton.setBounds(250, 450, 100, 30);
         panel.add(enterButton);
         /*
          * load panel
          */
         BootLoader.panelContainer.add(panel,"addMember");
         BootLoader.cardLayout.show(BootLoader.panelContainer, "addMember");
-        BootLoader.loginFrame.setSize(500,500);BootLoader.loginFrame.setSize(500,500);
+        BootLoader.loginFrame.setSize(500,600);
         /*
          * action listeners
          */
