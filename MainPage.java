@@ -63,7 +63,7 @@ public class MainPage {
             new ActionListener(){  
                     @Override
                 public void actionPerformed(ActionEvent e){  
-                    AddMember.addMember_init();
+                    Staff.addMember_init();
                 }     
             }
         );

@@ -5,7 +5,7 @@ import java.awt.CardLayout;
 import java.awt.Font;
 import java.awt.event.*;
 import javax.swing.*;
-public class BootLoader {
+public class BootLoader extends Staff {
     /*
      * 
      * team code (to do)
@@ -14,10 +14,7 @@ public class BootLoader {
      * 
      */
     static boolean userIdCheck(String id){
-        if (id.equals("123")) {
-            return true;
-        }
-        return false;
+        return isMemberPresent(id);
     }
     /*
      * 
@@ -29,7 +26,7 @@ public class BootLoader {
      */
     static final CardLayout cardLayout = new CardLayout();
     public static JPanel panelContainer = new JPanel(cardLayout);
-    static JFrame loginFrame;
+    static JFrame   loginFrame;
     public static void main(String[] args){
         /*
          * Initial JFrame
