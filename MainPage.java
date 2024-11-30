@@ -1,87 +1,88 @@
+import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+
 public class MainPage {
-    /*
-     * 
-     * 
-     * 
-     * 
-     * GUI code (final) Nothing to code in this class
-     * 
-     * 
-     * 
+    /**
+     * Switch back to the main page.
      */
-    public static void backToMain(){
+    public static void backToMain() {
         BootLoader.cardLayout.show(BootLoader.panelContainer, "main");
-        BootLoader.loginFrame.setSize(400,200);
+        BootLoader.loginFrame.setSize(400, 200);
     }
-    public static void main_init(String userID){
+
+    /**
+     * Initialize the main page GUI.
+     */
+    public static void main_init(String userID) {
         /*
-         * panel 
-         */ 
-        JPanel panel = new JPanel();
-        panel.setLayout(null);
+         * Main panel
+         */
+        JPanel panel = new JPanel(new GridBagLayout()); // Use GridBagLayout for automatic centering
+        GridBagConstraints gbc = new GridBagConstraints(); // For layout adjustments
+        gbc.insets = new Insets(10, 10, 10, 10); // Add padding between components
+
         /*
-         * buttons 
-         */ 
-        JButton button1 = new JButton("add member");
-        JButton button2 = new JButton("search member");
-        JButton button3 = new JButton("checkin member");
+         * Buttons
+         */
+        JButton button1 = new JButton("Add Member");
+        JButton button2 = new JButton("Search Member");
+        JButton button3 = new JButton("Check-In Member");
+
+        // Set fill and anchor for proper alignment
+        gbc.fill = GridBagConstraints.HORIZONTAL; // Stretch buttons horizontally
+        gbc.anchor = GridBagConstraints.CENTER; // Center all components
+
+        // Add the "Add Member" button
+        gbc.gridx = 0; // Column 0
+        gbc.gridy = 0; // Row 0
+        panel.add(button1, gbc);
+
+        // Add the "Search Member" button
+        gbc.gridx = 0; // Column 0
+        gbc.gridy = 1; // Row 1
+        panel.add(button2, gbc);
+
+        // Add the "Check-In Member" button
+        gbc.gridx = 0; // Column 0
+        gbc.gridy = 2; // Row 2
+        panel.add(button3, gbc);
+
         /*
-         * setBounds 
-         */ 
-        button1.setBounds(125, 50, 150, 30);  
-        button2.setBounds(50, 100, 150, 30); 
-        button3.setBounds(200, 100, 150, 30); 
-        /*
-         * add 
-         */ 
-        panel.add(button1);
-        panel.add(button2);
-        panel.add(button3);
-        /*
-         * card shift
-         */ 
-        BootLoader.panelContainer.add(panel,"main");
-        BootLoader.cardLayout.show(BootLoader.panelContainer, "main"); 
-        /*
-         * add 
-         */ 
-        panel.add(button1);
-        panel.add(button2);
-        panel.add(button3);
-        /*
-         * card shift
-         */ 
-        BootLoader.panelContainer.add(panel,"main");
+         * Add panel to BootLoader and show
+         */
+        BootLoader.panelContainer.add(panel, "main");
         BootLoader.cardLayout.show(BootLoader.panelContainer, "main");
-        BootLoader.loginFrame.setSize(400,200);
+        BootLoader.loginFrame.setSize(400, 300);
+
         /*
-         * action listeners
+         * Action listeners
          */
         button1.addActionListener(
-            new ActionListener(){  
+                new ActionListener() {
                     @Override
-                public void actionPerformed(ActionEvent e){  
-                    Staff.addMember_init();
-                }     
-            }
+                    public void actionPerformed(ActionEvent e) {
+                        Staff.addMember_init();
+                    }
+                }
         );
+
         button2.addActionListener(
-            new ActionListener(){  
+                new ActionListener() {
                     @Override
-                public void actionPerformed(ActionEvent e){  
-                    SearchMember.searchMember_init();
-                }     
-            }
+                    public void actionPerformed(ActionEvent e) {
+                        SearchMember.searchMember_init();
+                    }
+                }
         );
+
         button3.addActionListener(
-            new ActionListener(){  
+                new ActionListener() {
                     @Override
-                public void actionPerformed(ActionEvent e){  
-                    CheckinMember.checkin_init();
-                }     
-            }
+                    public void actionPerformed(ActionEvent e) {
+                        CheckinMember.checkin_init();
+                    }
+                }
         );
     }
 }

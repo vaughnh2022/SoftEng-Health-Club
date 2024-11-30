@@ -14,7 +14,8 @@ public class BootLoader extends Staff {
      * 
      */
     static boolean userIdCheck(String id){
-        return isMemberPresent(id);
+        return
+                isMemberPresent(id);
     }
     /*
      * 
