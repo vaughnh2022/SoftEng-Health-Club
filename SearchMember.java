@@ -105,7 +105,7 @@ public class SearchMember extends Staff {
 
         BootLoader.panelContainer.add(panel, "search panel");
         BootLoader.cardLayout.show(BootLoader.panelContainer, "search panel");
-        BootLoader.loginFrame.setSize(600, 400);
+        BootLoader.loginFrame.setSize(400, 400);
 
         // Action listeners
         enterB.addActionListener(

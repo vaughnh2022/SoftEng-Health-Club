@@ -19,8 +19,7 @@ public class MainPage {
          * Main panel
          */
         JPanel panel = new JPanel(new GridBagLayout()); // Use GridBagLayout for automatic centering
-        GridBagConstraints gbc = new GridBagConstraints(); // For layout adjustments
-        gbc.insets = new Insets(10, 10, 10, 10); // Add padding between components
+        panel.setLayout(new GridLayout(2, 2, 10, 10));
 
         /*
          * Buttons
@@ -28,26 +27,13 @@ public class MainPage {
         JButton button1 = new JButton("Add Member");
         JButton button2 = new JButton("Search Member");
         JButton button3 = new JButton("Check-In Member");
+        JButton button4 = new JButton("Add User");
 
-        // Set fill and anchor for proper alignment
-        gbc.fill = GridBagConstraints.HORIZONTAL; // Stretch buttons horizontally
-        gbc.anchor = GridBagConstraints.CENTER; // Center all components
-
-        // Add the "Add Member" button
-        gbc.gridx = 0; // Column 0
-        gbc.gridy = 0; // Row 0
-        panel.add(button1, gbc);
-
-        // Add the "Search Member" button
-        gbc.gridx = 0; // Column 0
-        gbc.gridy = 1; // Row 1
-        panel.add(button2, gbc);
-
-        // Add the "Check-In Member" button
-        gbc.gridx = 0; // Column 0
-        gbc.gridy = 2; // Row 2
-        panel.add(button3, gbc);
-
+        
+        panel.add(button1);
+        panel.add(button2);
+        panel.add(button3);
+        panel.add(button4);        
         /*
          * Add panel to BootLoader and show
          */
