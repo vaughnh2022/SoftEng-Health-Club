@@ -13,6 +13,9 @@ public class AddUser {
     public static String addNewUser(Boolean isStaff,String name){
         return "";
     }
+    public static boolean isAdmin(){
+        return true;
+    }
     /*
      * 
      * 
@@ -21,41 +24,53 @@ public class AddUser {
      * 
      */
     public static void addUserInit(){
+        /*
+         * JPanel
+         */
         JPanel panel = new JPanel();
         panel.setLayout(null);
-
-        // Add the main JLabel "Add User"
-        JLabel addUserLabel = new JLabel("Add User");
-        addUserLabel.setBounds(100, 10, 100, 25); // x, y, width, height
-        panel.add(addUserLabel);
-
-        // Add the smaller JLabel "Name"
+        /*
+         * title
+         */
+        JLabel addUserTitle = new JLabel("Add User");
+        addUserTitle.setBounds(100, 10, 100, 25);
+        panel.add(addUserTitle);
+        /*
+         * name and perm labels
+         */
         JLabel nameLabel = new JLabel("Name:");
-        nameLabel.setBounds(20, 50, 50, 25); // x, y, width, height
+        nameLabel.setBounds(20, 50, 50, 25); 
         panel.add(nameLabel);
-
-        // Add the smaller JLabel "Name"
         JLabel permLabel = new JLabel("Perms:");
-        permLabel.setBounds(20, 90, 50, 25); // x, y, width, height
+        permLabel.setBounds(20, 90, 50, 25); 
         panel.add(permLabel);
-
-        // Add the JTextField for name input
+        /*
+         * name text feild
+         */
         JTextField nameField = new JTextField();
-        nameField.setBounds(80, 50, 150, 25); // x, y, width, height
+        nameField.setBounds(80, 50, 150, 25); 
         panel.add(nameField);
-        // Add the button to switch between "Staff" and "Admin"
+        /*
+         * buttons
+         */
         JButton switchButton = new JButton("staff<-admin");
-        switchButton.setBounds(80, 90, 150, 25); // x, y, width, height
+        switchButton.setBounds(80, 90, 150, 25);
         JButton enterButton = new JButton("Enter");
-        enterButton.setBounds(170, 150, 80, 30); // x, y, width, height
+        enterButton.setBounds(170, 150, 80, 30); 
         JButton backButton = new JButton("back");
-        backButton.setBounds(50, 150, 80, 30); // x, y, width, height
+        backButton.setBounds(50, 150, 80, 30); 
         panel.add(switchButton);
         panel.add(enterButton);
         panel.add(backButton);
+        /*
+         * update panel
+         */
         BootLoader.panelContainer.add(panel, "add user");
         BootLoader.cardLayout.show(BootLoader.panelContainer, "add user");
         BootLoader.loginFrame.setSize(300, 300);
+        /*
+         * action listeners
+         */
         switchButton.addActionListener(
             new ActionListener(){  
                     @Override
@@ -91,8 +106,9 @@ public class AddUser {
          */
         JPanel panel = new JPanel();
         panel.setLayout(null);
-
-        // Add a label with text
+        /*
+         * userID label
+         */
         JLabel textLabel = new JLabel("This user's userID is " + userID);
         textLabel.setBounds(25, 50, 350, 25);
         /*

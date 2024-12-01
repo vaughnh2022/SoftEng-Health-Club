@@ -8,8 +8,6 @@ import javax.swing.*;
 public class BootLoader extends Staff {
     /*
      * 
-     * team code (to do)
-     * 
      * return true if correct userID
      * 
      */

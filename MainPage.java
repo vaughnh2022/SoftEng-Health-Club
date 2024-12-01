@@ -33,7 +33,9 @@ public class MainPage {
         panel.add(button1);
         panel.add(button2);
         panel.add(button3);
-        panel.add(button4);        
+        if (AddUser.isAdmin()) {
+            panel.add(button4);
+        }        
         /*
          * Add panel to BootLoader and show
          */
@@ -74,7 +76,9 @@ public class MainPage {
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        AddUser.addUserInit();
+                        if (AddUser.isAdmin()) {
+                            AddUser.addUserInit();
+                        }
                     }
                 }
         );

@@ -328,6 +328,13 @@ public class Staff {
     }
     public static boolean isMemberPresent(String memberID) {
         String sql = "SELECT COUNT(*) FROM members WHERE member_id = ?";
+        /*
+         * 
+         * 
+         * This is the only code i changed in Staff to give me admin perms to login and work with frontend feel free to change
+         * 
+         * 
+         */
         if (memberID.equals("admin")) {//checks for admin login
             return true; //run as admin
         }
