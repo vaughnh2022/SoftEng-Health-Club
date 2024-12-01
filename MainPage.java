@@ -70,5 +70,13 @@ public class MainPage {
                     }
                 }
         );
+        button4.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        AddUser.addUserInit();
+                    }
+                }
+        );
     }
 }
