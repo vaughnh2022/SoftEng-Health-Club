@@ -8,7 +8,7 @@ public class MainPage {
      */
     public static void backToMain() {
         BootLoader.cardLayout.show(BootLoader.panelContainer, "main");
-        BootLoader.loginFrame.setSize(400, 200);
+        BootLoader.loginFrame.setSize(800, 800);
     }
 
     /**

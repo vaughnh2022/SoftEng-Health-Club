@@ -8,53 +8,48 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 public class SearchMember extends Staff {
+
     /**
-     * Finds a member by their member ID or name and returns their details as an Object array.
+     * Finds all members by their member ID, first name, or last name and returns their details in a table-compatible format.
      *
-     * @param text The member ID or name to search for.
-     * @return An Object array containing the member's details, or null if not found.
+     * @param text The member ID, first name, or last name to search for.
+     * @return A DefaultTableModel containing all matching members' details, or null if no matches are found.
      */
-    /**
-     * Finds a member by their member ID or name and returns their details as an Object array.
-     *
-     * @param text The member ID or name to search for.
-     * @return An Object array containing the member's details, or null if not found.
-     */
-    public static Object[] findMember(String text) {
-        String sqlByID = "SELECT member_id, first_name, last_name, email, phone, membership_length, last_check_in FROM members WHERE member_id = ?";
-        String sqlByName = "SELECT member_id, first_name, last_name, email, phone, membership_length, last_check_in FROM members WHERE first_name = ? OR last_name = ?";
+    public static DefaultTableModel findMembers(String text) {
+        String sql = "SELECT member_id, first_name, last_name, email, phone, membership_length, last_check_in " +
+                "FROM members " +
+                "WHERE member_id = ? OR first_name = ? OR last_name = ?";
+
+        String[] columnNames = {"Member ID", "First Name", "Last Name", "Email", "Phone", "Membership Length", "Last Check-in"};
+        DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
 
         try (Connection conn = DatabaseConnection.connect();
-             PreparedStatement pstmtByID = conn.prepareStatement(sqlByID);
-             PreparedStatement pstmtByName = conn.prepareStatement(sqlByName)) {
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            // Search by Member ID
-            pstmtByID.setString(1, text);
-            try (ResultSet rsByID = pstmtByID.executeQuery()) {
-                if (rsByID.next()) {
-                    return extractMemberDetails(rsByID);
-                }
-            }
+            // Set the parameters for the query
+            pstmt.setString(1, text);
+            pstmt.setString(2, text);
+            pstmt.setString(3, text);
 
-            // Search by Name
-            pstmtByName.setString(1, text);
-            pstmtByName.setString(2, text);
-            try (ResultSet rsByName = pstmtByName.executeQuery()) {
-                if (rsByName.next()) {
-                    return extractMemberDetails(rsByName);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                // Add all matching rows to the table model
+                while (rs.next()) {
+                    Object[] memberDetails = extractMemberDetails(rs);
+                    tableModel.addRow(memberDetails);
                 }
             }
 
         } catch (SQLException e) {
-            System.out.println("Error while searching for member.");
+            System.out.println("Error while searching for members.");
             e.printStackTrace();
         }
 
-        return null; // Return null if no member found
+        // If the table model has no rows, return null to indicate no results
+        return tableModel.getRowCount() > 0 ? tableModel : null;
     }
 
     /**
-     * Extracts the member details from the ResultSet.
+     * Extracts a single member's details from the ResultSet.
      *
      * @param rs The ResultSet containing the member's details.
      * @return An Object array of member details.
@@ -105,18 +100,18 @@ public class SearchMember extends Staff {
 
         BootLoader.panelContainer.add(panel, "search panel");
         BootLoader.cardLayout.show(BootLoader.panelContainer, "search panel");
-        BootLoader.loginFrame.setSize(400, 400);
+        BootLoader.loginFrame.setSize(600, 400);
 
         // Action listeners
         enterB.addActionListener(
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        Object[] memberDetails = findMember(inputArea.getText());
-                        if (memberDetails == null) {
-                            errorTitle.setText("Incorrect input or member not found.");
+                        DefaultTableModel memberTableModel = findMembers(inputArea.getText());
+                        if (memberTableModel == null) {
+                            errorTitle.setText("No members found for the given input.");
                         } else {
-                            showMemberDetails(memberDetails);
+                            showMemberDetails(memberTableModel);
                         }
                     }
                 }
@@ -133,22 +128,16 @@ public class SearchMember extends Staff {
     }
 
     /**
-     * Displays the member's information in a JTable in a new panel.
+     * Displays all matching members' information in a JTable in a new panel.
      *
-     * @param memberDetails The details of the member to display.
+     * @param memberTableModel The table model containing all matching members' details.
      */
-    public static void showMemberDetails(Object[] memberDetails) {
+    public static void showMemberDetails(DefaultTableModel memberTableModel) {
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
 
-        // Table headers
-        String[] columnNames = {"Member ID", "First Name", "Last Name", "Email", "Phone", "Membership Length", "Last Check-in"};
-
-        // Table model
-        DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
-        tableModel.addRow(memberDetails); // Add the member's details as a row
-
-        JTable table = new JTable(tableModel);
+        // Create the table with the model
+        JTable table = new JTable(memberTableModel);
         JScrollPane scrollPane = new JScrollPane(table);
 
         // Button to go back
@@ -162,6 +151,6 @@ public class SearchMember extends Staff {
         // Update the GUI
         BootLoader.panelContainer.add(panel, "details panel");
         BootLoader.cardLayout.show(BootLoader.panelContainer, "details panel");
-        BootLoader.loginFrame.setSize(700, 250); // Adjust the frame size for the table
+        BootLoader.loginFrame.setSize(800, 300); // Adjust the frame size for the table
     }
 }

@@ -168,9 +168,7 @@ public class Staff {
         /*
          * Address
          */
-
-
-        JLabel streetLabel = new JLabel("Address :");
+        JLabel streetLabel = new JLabel("Street:");
         streetLabel.setBounds(20, 250, 200, 25);
         panel.add(streetLabel);
 
@@ -203,29 +201,29 @@ public class Staff {
         panel.add(zipField);
 
         JLabel errorLabel = new JLabel("");
-        errorLabel.setBounds(200, 450, 200, 25);
+        errorLabel.setBounds(200, 500, 200, 25);
         panel.add(errorLabel);
 
         /*
-         * Membership Length
+         * Membership Length Dropdown
          */
-        JLabel membershipLabel = new JLabel("Membership length by year, {0.5,1,2}:");
+        JLabel membershipLabel = new JLabel("Membership Length:");
         membershipLabel.setBounds(20, 410, 200, 25);
         panel.add(membershipLabel);
 
-        JTextField membershipField = new JTextField();
-        membershipField.setBounds(230, 410, 200, 25);
-        panel.add(membershipField);
+        final JComboBox<String> membershipLengthDropdown = new JComboBox<>(new String[]{"0.5 (Half Year)", "1 (One Year)", "2 (Two Years)"});
+        membershipLengthDropdown.setBounds(230, 410, 200, 25);
+        panel.add(membershipLengthDropdown);
 
         /*
          * Buttons
          */
         JButton backButton = new JButton("Back");
-        backButton.setBounds(100, 500, 100, 30);
+        backButton.setBounds(100, 550, 100, 30);
         panel.add(backButton);
 
         JButton enterButton = new JButton("Enter");
-        enterButton.setBounds(250, 500, 100, 30);
+        enterButton.setBounds(250, 550, 100, 30);
         panel.add(enterButton);
 
         /*
@@ -233,7 +231,7 @@ public class Staff {
          */
         BootLoader.panelContainer.add(panel, "addMember");
         BootLoader.cardLayout.show(BootLoader.panelContainer, "addMember");
-        BootLoader.loginFrame.setSize(500, 650); // Adjusted height for new fields
+        BootLoader.loginFrame.setSize(500, 700); // Adjusted height for new fields
 
         /*
          * Action listeners
@@ -246,6 +244,10 @@ public class Staff {
                         stateField.setText("");
                         streetField.setText("");
                         cityField.setText("");
+                        firstNameField.setText("");
+                        lastNameField.setText("");
+                        emailField.setText("");
+                        phoneField.setText("");
                         errorLabel.setText("");
                         MainPage.backToMain();
                     }
@@ -261,11 +263,13 @@ public class Staff {
                         String lastName = lastNameField.getText();
                         String email = emailField.getText();
                         String phone = phoneField.getText();
-                        String zip = zipField.getText();
-                        String state = stateField.getText();
                         String street = streetField.getText();
                         String city = cityField.getText();
-                        String membershipLength = membershipField.getText();
+                        String state = stateField.getText();
+                        String zip = zipField.getText();
+
+                        // Get selected membership length
+                        String membershipLength = membershipLengthDropdown.getSelectedItem().toString().split(" ")[0]; // Extract the numeric value
 
                         // Validate inputs
                         String checkBol = addMemberCheck(firstName, lastName, street, city, state, zip, email, phone, membershipLength);
@@ -288,8 +292,8 @@ public class Staff {
                     }
                 }
         );
-
     }
+
 
 
     public static void alert_init(String memberID) {
@@ -329,11 +333,11 @@ public class Staff {
     public static boolean isMemberPresent(String memberID) {
         String sql = "SELECT COUNT(*) FROM members WHERE member_id = ?";
         /*
-         * 
-         * 
+         *
+         *
          * This is the only code i changed in Staff to give me admin perms to login and work with frontend feel free to change
-         * 
-         * 
+         *
+         *
          */
         if (memberID.equals("admin")) {//checks for admin login
             return true; //run as admin
