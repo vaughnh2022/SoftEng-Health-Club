@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.awt.event.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,67 +9,16 @@ import javax.swing.*;
 
 public class Staff {
 
-    /*
-     *
-     *
-     *
-     *
-     * team code
-     *
-     * return "" if correct, else return a string describing error
-     *
-     */
-
     public static String addMemberCheck(String firstName, String lastName, String street, String city, String state, String zip, String email, String phone, String membershipLength) {
-        // Print values to trace input
-        System.out.println("Validating input...");
-        System.out.println("First Name: " + firstName);
-        System.out.println("Last Name: " + lastName);
-        System.out.println("Street: " + street);
-        System.out.println("City: " + city);
-        System.out.println("State: " + state);
-        System.out.println("Zip: " + zip);
-        System.out.println("Email: " + email);
-        System.out.println("Phone: " + phone);
-        System.out.println("Membership Length: " + membershipLength);
-
-        // Validate inputs
-        if (firstName.isEmpty()) {
-            return "First name is missing.";
-        }
-        if (lastName.isEmpty()) {
-            return "Last name is missing.";
-        }
-        if (street.isEmpty() || city.isEmpty() || state.isEmpty() || zip.isEmpty()) {
-            return "One or more address fields are missing.";
-        }
-
-        // Additional validations
-        if (!email.contains("@")) {
-            return "Email format is incorrect.";
-        }
-        if (!phone.matches("\\(\\d{3}\\)-\\d{3}-\\d{4}")) {
-            return "Phone number format is incorrect.";
-        }
-        if (!membershipLength.matches("\\d+(\\.\\d{1})?") || Double.parseDouble(membershipLength) <= 0) {
-            return "Membership length is invalid.";
-        }
-
-        // If everything is valid, return an empty string
+        if (firstName.isEmpty()) return "First name is missing.";
+        if (lastName.isEmpty()) return "Last name is missing.";
+        if (street.isEmpty() || city.isEmpty() || state.isEmpty() || zip.isEmpty()) return "One or more address fields are missing.";
+        if (!email.contains("@")) return "Email format is incorrect.";
+        if (!phone.matches("\\(\\d{3}\\)-\\d{3}-\\d{4}")) return "Phone number format is incorrect.";
+        if (!membershipLength.matches("\\d+(\\.\\d{1})?") || Double.parseDouble(membershipLength) <= 0) return "Membership length is invalid.";
         return "";
     }
 
-
-
-
-    /*
-     *
-     * team code
-     *
-     * add new member given this information
-     *
-     *
-     */
     public static void addNewMember(String firstName, String lastName, String street, String city, String state, String zip, String memberID, String email, String phone, String membershipLength) {
         String sql = "INSERT INTO members (member_id, first_name, last_name, email, phone, street, city, state, zip, membership_length) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -85,263 +35,160 @@ public class Staff {
             pstmt.setString(8, state);
             pstmt.setString(9, zip);
             pstmt.setString(10, membershipLength);
-
             pstmt.executeUpdate();
-            System.out.println("New member added successfully!");
 
         } catch (SQLException e) {
-            System.out.println("Error adding new member.");
             e.printStackTrace();
         }
     }
 
-
-    /*
-     *
-     *
-     *
-     *
-     * GUI code (final)
-     *
-     *
-     *
-     */
     public static void addMember_init() {
-        /*
-         * Main panel
-         */
-        JPanel panel = new JPanel();
-        panel.setLayout(null); // Using absolute positioning with setBounds()
+        JPanel panel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10); // Padding around components
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        /*
-         * Title
-         */
-        JLabel titleLabel = new JLabel("Add Member");
-        titleLabel.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 20));
-        titleLabel.setBounds(175, 10, 200, 30); // Position and size
-        panel.add(titleLabel);
+        // Title
+        JLabel titleLabel = new JLabel("Add Member", SwingConstants.CENTER);
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 2;
+        panel.add(titleLabel, gbc);
 
-        /*
-         * First Name
-         */
-        JLabel firstNameLabel = new JLabel("First Name:");
-        firstNameLabel.setBounds(20, 50, 200, 25);
-        panel.add(firstNameLabel);
+        // First Name
+        gbc.gridwidth = 1;
+        gbc.gridy = 1;
+        gbc.gridx = 0;
+        panel.add(new JLabel("First Name:"), gbc);
 
-        JTextField firstNameField = new JTextField();
-        firstNameField.setBounds(230, 50, 200, 25);
-        panel.add(firstNameField);
+        JTextField firstNameField = new JTextField(20);
+        gbc.gridx = 1;
+        panel.add(firstNameField, gbc);
 
-        /*
-         * Last Name
-         */
-        JLabel lastNameLabel = new JLabel("Last Name:");
-        lastNameLabel.setBounds(20, 90, 200, 25);
-        panel.add(lastNameLabel);
+        // Last Name
+        gbc.gridy = 2;
+        gbc.gridx = 0;
+        panel.add(new JLabel("Last Name:"), gbc);
 
-        JTextField lastNameField = new JTextField();
-        lastNameField.setBounds(230, 90, 200, 25);
-        panel.add(lastNameField);
+        JTextField lastNameField = new JTextField(20);
+        gbc.gridx = 1;
+        panel.add(lastNameField, gbc);
 
-        /*
-         * Email
-         */
-        JLabel emailLabel = new JLabel("Email, EX. name@domain.com:");
-        emailLabel.setBounds(20, 130, 200, 25);
-        panel.add(emailLabel);
+        // Email
+        gbc.gridy = 3;
+        gbc.gridx = 0;
+        panel.add(new JLabel("Email:"), gbc);
 
-        JTextField emailField = new JTextField();
-        emailField.setBounds(230, 130, 200, 25);
-        panel.add(emailField);
+        JTextField emailField = new JTextField(20);
+        gbc.gridx = 1;
+        panel.add(emailField, gbc);
 
-        /*
-         * Phone Number
-         */
-        JLabel phoneLabel = new JLabel("Phone Number (xxx)-xxx-xxxx:");
-        phoneLabel.setBounds(20, 170, 250, 25); // Adjusted to avoid overlap
-        panel.add(phoneLabel);
+        // Phone
+        gbc.gridy = 4;
+        gbc.gridx = 0;
+        panel.add(new JLabel("Phone (e.g., (xxx)-xxx-xxxx):"), gbc);
 
-        JTextField phoneField = new JTextField();
-        phoneField.setBounds(230, 170, 200, 25); // Adjusted to avoid overlap
-        panel.add(phoneField);
+        JTextField phoneField = new JTextField(20);
+        gbc.gridx = 1;
+        panel.add(phoneField, gbc);
 
-        /*
-         * Address
-         */
-        JLabel streetLabel = new JLabel("Street:");
-        streetLabel.setBounds(20, 250, 200, 25);
-        panel.add(streetLabel);
+        // Address
+        gbc.gridy = 5;
+        gbc.gridx = 0;
+        panel.add(new JLabel("Street:"), gbc);
 
-        JTextField streetField = new JTextField();
-        streetField.setBounds(230, 250, 200, 25);
-        panel.add(streetField);
+        JTextField streetField = new JTextField(20);
+        gbc.gridx = 1;
+        panel.add(streetField, gbc);
 
-        JLabel cityLabel = new JLabel("City, EX. Chicago:");
-        cityLabel.setBounds(20, 290, 200, 25);
-        panel.add(cityLabel);
+        gbc.gridy = 6;
+        gbc.gridx = 0;
+        panel.add(new JLabel("City:"), gbc);
 
-        JTextField cityField = new JTextField();
-        cityField.setBounds(230, 290, 200, 25);
-        panel.add(cityField);
+        JTextField cityField = new JTextField(20);
+        gbc.gridx = 1;
+        panel.add(cityField, gbc);
 
-        JLabel stateLabel = new JLabel("State, EX: IL:");
-        stateLabel.setBounds(20, 330, 200, 25);
-        panel.add(stateLabel);
+        gbc.gridy = 7;
+        gbc.gridx = 0;
+        panel.add(new JLabel("State (e.g., New York): "), gbc);
 
-        JTextField stateField = new JTextField();
-        stateField.setBounds(230, 330, 200, 25);
-        panel.add(stateField);
+        JTextField stateField = new JTextField(20);
+        gbc.gridx = 1;
+        panel.add(stateField, gbc);
 
-        JLabel zipLabel = new JLabel("ZIP Code, EX. 60626:");
-        zipLabel.setBounds(20, 370, 200, 25);
-        panel.add(zipLabel);
+        gbc.gridy = 8;
+        gbc.gridx = 0;
+        panel.add(new JLabel("ZIP Code (e.g., 60659): "), gbc);
 
-        JTextField zipField = new JTextField();
-        zipField.setBounds(230, 370, 200, 25);
-        panel.add(zipField);
+        JTextField zipField = new JTextField(20);
+        gbc.gridx = 1;
+        panel.add(zipField, gbc);
 
-        JLabel errorLabel = new JLabel("");
-        errorLabel.setBounds(200, 500, 200, 25);
-        panel.add(errorLabel);
+        // Membership Length
+        gbc.gridy = 9;
+        gbc.gridx = 0;
+        panel.add(new JLabel("Membership Length:"), gbc);
 
-        /*
-         * Membership Length Dropdown
-         */
-        JLabel membershipLabel = new JLabel("Membership Length:");
-        membershipLabel.setBounds(20, 410, 200, 25);
-        panel.add(membershipLabel);
+        JComboBox<String> membershipDropdown = new JComboBox<>(new String[]{"0.5 (Half Year)", "1 (One Year)", "2 (Two Years)"});
+        gbc.gridx = 1;
+        panel.add(membershipDropdown, gbc);
 
-        final JComboBox<String> membershipLengthDropdown = new JComboBox<>(new String[]{"0.5 (Half Year)", "1 (One Year)", "2 (Two Years)"});
-        membershipLengthDropdown.setBounds(230, 410, 200, 25);
-        panel.add(membershipLengthDropdown);
-
-        /*
-         * Buttons
-         */
+        // Buttons
+        gbc.gridy = 10;
+        gbc.gridx = 0;
         JButton backButton = new JButton("Back");
-        backButton.setBounds(100, 550, 100, 30);
-        panel.add(backButton);
+        panel.add(backButton, gbc);
 
+        gbc.gridx = 1;
         JButton enterButton = new JButton("Enter");
-        enterButton.setBounds(250, 550, 100, 30);
-        panel.add(enterButton);
+        panel.add(enterButton, gbc);
 
-        /*
-         * Load panel
-         */
+        // Error Label
+        JLabel errorLabel = new JLabel("", SwingConstants.CENTER);
+        errorLabel.setForeground(Color.RED);
+        gbc.gridy = 11;
+        gbc.gridx = 0;
+        gbc.gridwidth = 2;
+        panel.add(errorLabel, gbc);
+
         BootLoader.panelContainer.add(panel, "addMember");
         BootLoader.cardLayout.show(BootLoader.panelContainer, "addMember");
-        BootLoader.loginFrame.setSize(500, 700); // Adjusted height for new fields
-
-        /*
-         * Action listeners
-         */
-        backButton.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        zipField.setText("");
-                        stateField.setText("");
-                        streetField.setText("");
-                        cityField.setText("");
-                        firstNameField.setText("");
-                        lastNameField.setText("");
-                        emailField.setText("");
-                        phoneField.setText("");
-                        errorLabel.setText("");
-                        MainPage.backToMain();
-                    }
-                }
-        );
-
-        enterButton.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        // Get user input
-                        String firstName = firstNameField.getText();
-                        String lastName = lastNameField.getText();
-                        String email = emailField.getText();
-                        String phone = phoneField.getText();
-                        String street = streetField.getText();
-                        String city = cityField.getText();
-                        String state = stateField.getText();
-                        String zip = zipField.getText();
-
-                        // Get selected membership length
-                        String membershipLength = membershipLengthDropdown.getSelectedItem().toString().split(" ")[0]; // Extract the numeric value
-
-                        // Validate inputs
-                        String checkBol = addMemberCheck(firstName, lastName, street, city, state, zip, email, phone, membershipLength);
-
-                        if (checkBol.equals("")) {
-                            // Generate random member ID
-                            Random rand = new Random();
-                            int userID = rand.nextInt(50000);
-                            String memberID = String.format("%05d", userID); // Zero-pad to 5 digits
-
-                            // Add new member to the database
-                            addNewMember(firstName, lastName, street, city, state, zip, memberID, email, phone, membershipLength);
-
-                            // Show confirmation
-                            alert_init(memberID);
-                        } else {
-                            // Display error message
-                            errorLabel.setText(checkBol);
-                        }
-                    }
-                }
-        );
-    }
+        BootLoader.loginFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
 
+        // Action listeners
+        backButton.addActionListener(e -> MainPage.backToMain());
+        enterButton.addActionListener(e -> {
+            String firstName = firstNameField.getText().trim();
+            String lastName = lastNameField.getText().trim();
+            String email = emailField.getText().trim();
+            String phone = phoneField.getText().trim();
+            String street = streetField.getText().trim();
+            String city = cityField.getText().trim();
+            String state = stateField.getText().trim();
+            String zip = zipField.getText().trim();
+            String membershipLength = membershipDropdown.getSelectedItem().toString().split(" ")[0];
 
-    public static void alert_init(String memberID) {
-        /*
-         * JPanel
-         */
-        JPanel panel = new JPanel();
-        panel.setLayout(null);
-
-        // Add a label with text
-        JLabel textLabel = new JLabel("This member's memberID is " + memberID);
-        textLabel.setBounds(25, 50, 350, 25);
-        /*
-         * button
-         */
-        JButton nextButton = new JButton("Next");
-        nextButton.setBounds(150, 100, 100, 30);
-        /*
-         * add
-         */
-        panel.add(textLabel);
-        panel.add(nextButton);
-        BootLoader.panelContainer.add(panel, "alert panel");
-        BootLoader.cardLayout.show(BootLoader.panelContainer, "alert panel");
-        BootLoader.loginFrame.setSize(400, 400);
-        /*
-         * action listeners
-         */
-        nextButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                MainPage.backToMain();
+            String validationError = addMemberCheck(firstName, lastName, street, city, state, zip, email, phone, membershipLength);
+            if (!validationError.isEmpty()) {
+                errorLabel.setText(validationError);
+                return;
             }
-        });
 
+            String memberID;
+            do {
+                memberID = String.format("%05d", new Random().nextInt(50000));
+            } while (!isMemberIDUnique(memberID));
+
+            addNewMember(firstName, lastName, street, city, state, zip, memberID, email, phone, membershipLength);
+            alert_init(memberID);
+        });
     }
-    public static boolean isMemberPresent(String memberID) {
+
+    public static boolean isMemberIDUnique(String memberID) {
         String sql = "SELECT COUNT(*) FROM members WHERE member_id = ?";
-        /*
-         *
-         *
-         * This is the only code i changed in Staff to give me admin perms to login and work with frontend feel free to change
-         *
-         *
-         */
-        if (memberID.equals("admin")) {//checks for admin login
-            return true; //run as admin
-        }
 
         try (Connection conn = DatabaseConnection.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -349,39 +196,34 @@ public class Staff {
             pstmt.setString(1, memberID);
 
             try (ResultSet rs = pstmt.executeQuery()) {
-                if (rs.next()) {
-                    int count = rs.getInt(1);
-                    return count > 0; // Return true if at least one match is found
-                }
+                return rs.next() && rs.getInt(1) == 0;
             }
         } catch (SQLException e) {
-            System.out.println("Error while checking member presence.");
             e.printStackTrace();
         }
 
-        return false; // Default to false if there's an error
-    }
-    public static boolean isMemberPresentName(String name) {
-        String sql = "SELECT COUNT(*) FROM members WHERE name = ?";
-
-        try (Connection conn = DatabaseConnection.connect();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            pstmt.setString(1, name);
-
-            try (ResultSet rs = pstmt.executeQuery()) {
-                if (rs.next()) {
-                    int count = rs.getInt(1);
-                    return count > 0; // Return true if at least one match is found
-                }
-            }
-        } catch (SQLException e) {
-            System.out.println("Error while checking member presence.");
-            e.printStackTrace();
-        }
-
-        return false; // Default to false if there's an error
+        return false;
     }
 
+    public static void alert_init(String memberID) {
+        JPanel panel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
 
+        JLabel textLabel = new JLabel("This member's memberID is " + memberID);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        panel.add(textLabel, gbc);
+
+        JButton nextButton = new JButton("Next");
+        gbc.gridy = 1;
+        panel.add(nextButton, gbc);
+
+        BootLoader.panelContainer.add(panel, "alert panel");
+        BootLoader.cardLayout.show(BootLoader.panelContainer, "alert panel");
+        BootLoader.loginFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+
+
+        nextButton.addActionListener(e -> MainPage.backToMain());
+    }
 }

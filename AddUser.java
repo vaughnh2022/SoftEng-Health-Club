@@ -1,8 +1,9 @@
+import java.awt.*;
 import java.awt.event.*;
+import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import javax.swing.*;
 
 public class AddUser {
 
@@ -34,7 +35,7 @@ public class AddUser {
             return String.format("%05d", memberID);
 
         } catch (SQLException e) {
-            System.out.println("Error adding new user.");
+            System.out.println("Error adding new user: " + e.getMessage());
             e.printStackTrace();
             return null;
         }
@@ -47,124 +48,155 @@ public class AddUser {
             return;
         }
 
-        JPanel panel = new JPanel();
-        panel.setLayout(null);
+        JPanel panel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        JLabel addUserTitle = new JLabel("Add User");
-        addUserTitle.setBounds(150, 10, 200, 25);
-        panel.add(addUserTitle);
+        /*
+         * Title
+         */
+        JLabel titleLabel = new JLabel("Add Staff", SwingConstants.CENTER);
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        gbc.gridwidth = 2;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        panel.add(titleLabel, gbc);
+
+        gbc.gridwidth = 1;
 
         /*
          * First Name
          */
         JLabel firstNameLabel = new JLabel("First Name:");
-        firstNameLabel.setBounds(20, 50, 200, 25);
-        panel.add(firstNameLabel);
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        panel.add(firstNameLabel, gbc);
 
         JTextField firstNameField = new JTextField();
-        firstNameField.setBounds(230, 50, 200, 25);
-        panel.add(firstNameField);
+        firstNameField.setPreferredSize(new Dimension(300, 30));
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        panel.add(firstNameField, gbc);
 
         /*
          * Last Name
          */
         JLabel lastNameLabel = new JLabel("Last Name:");
-        lastNameLabel.setBounds(20, 90, 200, 25);
-        panel.add(lastNameLabel);
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        panel.add(lastNameLabel, gbc);
 
         JTextField lastNameField = new JTextField();
-        lastNameField.setBounds(230, 90, 200, 25);
-        panel.add(lastNameField);
+        lastNameField.setPreferredSize(new Dimension(300, 30));
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        panel.add(lastNameField, gbc);
 
         /*
          * Email
          */
-        JLabel emailLabel = new JLabel("Email, EX. name@domain.com:");
-        emailLabel.setBounds(20, 130, 200, 25);
-        panel.add(emailLabel);
+        JLabel emailLabel = new JLabel("Email:");
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        panel.add(emailLabel, gbc);
 
         JTextField emailField = new JTextField();
-        emailField.setBounds(230, 130, 200, 25);
-        panel.add(emailField);
+        emailField.setPreferredSize(new Dimension(300, 30));
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        panel.add(emailField, gbc);
 
         /*
          * Phone Number
          */
-        JLabel phoneLabel = new JLabel("Phone (xxx-xxx-xxxx):");
-        phoneLabel.setBounds(20, 170, 200, 25);
-        panel.add(phoneLabel);
+        JLabel phoneLabel = new JLabel("Phone (e.g., (xxx)-xxx-xxxx):");
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        panel.add(phoneLabel, gbc);
 
         JTextField phoneField = new JTextField();
-        phoneField.setBounds(230, 170, 200, 25);
-        panel.add(phoneField);
+        phoneField.setPreferredSize(new Dimension(300, 30));
+        gbc.gridx = 1;
+        gbc.gridy = 4;
+        panel.add(phoneField, gbc);
 
         /*
          * Address
          */
-        JLabel streetLabel = new JLabel("Address:");
-        streetLabel.setBounds(20, 210, 200, 25);
-        panel.add(streetLabel);
+        JLabel streetLabel = new JLabel("Street:");
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        panel.add(streetLabel, gbc);
 
         JTextField streetField = new JTextField();
-        streetField.setBounds(230, 210, 200, 25);
-        panel.add(streetField);
+        streetField.setPreferredSize(new Dimension(300, 30));
+        gbc.gridx = 1;
+        gbc.gridy = 5;
+        panel.add(streetField, gbc);
 
-        JLabel cityLabel = new JLabel("City, EX. Chicago:");
-        cityLabel.setBounds(20, 250, 200, 25);
-        panel.add(cityLabel);
+        JLabel cityLabel = new JLabel("City:");
+        gbc.gridx = 0;
+        gbc.gridy = 6;
+        panel.add(cityLabel, gbc);
 
         JTextField cityField = new JTextField();
-        cityField.setBounds(230, 250, 200, 25);
-        panel.add(cityField);
+        cityField.setPreferredSize(new Dimension(300, 30));
+        gbc.gridx = 1;
+        gbc.gridy = 6;
+        panel.add(cityField, gbc);
 
-        JLabel stateLabel = new JLabel("State, EX: IL:");
-        stateLabel.setBounds(20, 290, 200, 25);
-        panel.add(stateLabel);
+        JLabel stateLabel = new JLabel("State:");
+        gbc.gridx = 0;
+        gbc.gridy = 7;
+        panel.add(stateLabel, gbc);
 
         JTextField stateField = new JTextField();
-        stateField.setBounds(230, 290, 200, 25);
-        panel.add(stateField);
+        stateField.setPreferredSize(new Dimension(300, 30));
+        gbc.gridx = 1;
+        gbc.gridy = 7;
+        panel.add(stateField, gbc);
 
-        JLabel zipLabel = new JLabel("ZIP Code, EX. 60626:");
-        zipLabel.setBounds(20, 330, 200, 25);
-        panel.add(zipLabel);
+        JLabel zipLabel = new JLabel("ZIP Code (e.g., 60626):");
+        gbc.gridx = 0;
+        gbc.gridy = 8;
+        panel.add(zipLabel, gbc);
 
         JTextField zipField = new JTextField();
-        zipField.setBounds(230, 330, 200, 25);
-        panel.add(zipField);
+        zipField.setPreferredSize(new Dimension(300, 30));
+        gbc.gridx = 1;
+        gbc.gridy = 8;
+        panel.add(zipField, gbc);
 
         /*
          * Role Selector
          */
         JLabel roleLabel = new JLabel("Role:");
-        roleLabel.setBounds(20, 370, 200, 25);
-        panel.add(roleLabel);
+        gbc.gridx = 0;
+        gbc.gridy = 9;
+        panel.add(roleLabel, gbc);
 
         JComboBox<String> roleComboBox = new JComboBox<>(new String[]{"Admin", "Staff"});
-        roleComboBox.setBounds(230, 370, 200, 25);
-        panel.add(roleComboBox);
-
-        /*
-         * Error Label
-         */
-        JLabel errorLabel = new JLabel("");
-        errorLabel.setBounds(20, 450, 200, 25);
-        panel.add(errorLabel);
+        gbc.gridx = 1;
+        gbc.gridy = 9;
+        panel.add(roleComboBox, gbc);
 
         /*
          * Buttons
          */
         JButton enterButton = new JButton("Enter");
-        enterButton.setBounds(150, 500, 100, 30);
-        panel.add(enterButton);
+        gbc.gridx = 0;
+        gbc.gridy = 10;
+        panel.add(enterButton, gbc);
 
         JButton backButton = new JButton("Back");
-        backButton.setBounds(280, 500, 100, 30);
-        panel.add(backButton);
+        gbc.gridx = 1;
+        gbc.gridy = 10;
+        panel.add(backButton, gbc);
 
         BootLoader.panelContainer.add(panel, "add user");
         BootLoader.cardLayout.show(BootLoader.panelContainer, "add user");
-        BootLoader.loginFrame.setSize(500, 600);
+        BootLoader.loginFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         enterButton.addActionListener(e -> {
             String firstName = firstNameField.getText().trim();
@@ -179,7 +211,7 @@ public class AddUser {
 
             if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || phone.isEmpty() ||
                     street.isEmpty() || city.isEmpty() || state.isEmpty() || zip.isEmpty()) {
-                errorLabel.setText("Error: All fields must be filled.");
+                JOptionPane.showMessageDialog(null, "Error: All fields must be filled.");
                 return;
             }
 
@@ -187,30 +219,34 @@ public class AddUser {
             if (memberID != null) {
                 alert_init(memberID);
             } else {
-                errorLabel.setText("Error: Failed to add user.");
+                JOptionPane.showMessageDialog(null, "Error: Failed to add user. Please check database connectivity.");
             }
         });
 
         backButton.addActionListener(e -> MainPage.backToMain());
     }
 
+
     public static void alert_init(String memberID) {
-        JPanel panel = new JPanel();
-        panel.setLayout(null);
+        JPanel panel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
 
         JLabel textLabel = new JLabel("This user's Member ID is " + memberID);
-        textLabel.setBounds(25, 50, 350, 25);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        panel.add(textLabel, gbc);
 
         JButton nextButton = new JButton("Next");
-        nextButton.setBounds(150, 100, 100, 30);
-
-        panel.add(textLabel);
-        panel.add(nextButton);
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        panel.add(nextButton, gbc);
 
         BootLoader.panelContainer.add(panel, "user alert panel");
         BootLoader.cardLayout.show(BootLoader.panelContainer, "user alert panel");
-        BootLoader.loginFrame.setSize(400, 200);
+        BootLoader.loginFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
+        nextButton.addActionListener(e -> MainPage.backToMain());
         nextButton.addActionListener(e -> MainPage.backToMain());
     }
 }

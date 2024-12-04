@@ -1,10 +1,10 @@
-import java.awt.Font;
+import java.awt.*;
 import java.awt.event.*;
+import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import javax.swing.*;
 import java.time.LocalDate;
 
 public class CheckinMember {
@@ -62,93 +62,117 @@ public class CheckinMember {
     /**
      * Initializes the member check-in GUI.
      */
+    /**
+     * Initializes the member check-in GUI with proper alignment.
+     */
     public static void checkin_init() {
-        JPanel panel = new JPanel();
-        panel.setLayout(null);
+        // Create a panel with GridBagLayout for precise alignment
+        JPanel panel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10); // Padding around components
+        gbc.fill = GridBagConstraints.HORIZONTAL; // Fill horizontally
 
-        JLabel title = new JLabel("Member Check-In");
-        JLabel subTitle = new JLabel("Please enter member ID. Use Search Member if ID is unknown.");
-        JLabel errorTitle = new JLabel();
-        JButton enterB = new JButton("Enter");
+        // Title
+        JLabel title = new JLabel("Member Check-In", SwingConstants.CENTER);
+        title.setFont(new Font("Arial", Font.BOLD, 18));
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 2; // Span across two columns
+        panel.add(title, gbc);
+
+        // Subtitle
+        JLabel subTitle = new JLabel("Please enter member ID. Use Search Member if ID is unknown.", SwingConstants.CENTER);
+        subTitle.setFont(new Font("Arial", Font.PLAIN, 12));
+        gbc.gridy = 1;
+        gbc.gridwidth = 2;
+        panel.add(subTitle, gbc);
+
+        // Input Label
+        JLabel inputLabel = new JLabel("Member ID:");
+        inputLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.gridwidth = 1; // Reset to single column
+        panel.add(inputLabel, gbc);
+
+        // Input Field
+        JTextField inputField = new JTextField(20); // Set consistent size
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        panel.add(inputField, gbc);
+
+        // Buttons
         JButton backB = new JButton("Back");
-        JTextArea inputArea = new JTextArea();
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.gridwidth = 1;
+        panel.add(backB, gbc);
 
-        // Set bounds
-        title.setBounds(120, 30, 200, 25);
-        subTitle.setBounds(35, 70, 300, 25);
-        subTitle.setFont(new Font("Arial", Font.PLAIN, 10));
-        inputArea.setBounds(50, 110, 250, 30);
-        backB.setBounds(50, 160, 100, 30);
-        enterB.setBounds(170, 160, 100, 30);
-        errorTitle.setBounds(35, 200, 300, 25);
+        JButton enterB = new JButton("Enter");
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        panel.add(enterB, gbc);
 
-        // Add components
-        panel.add(title);
-        panel.add(subTitle);
-        panel.add(errorTitle);
-        panel.add(inputArea);
-        panel.add(enterB);
-        panel.add(backB);
+        // Error Label
+        JLabel errorTitle = new JLabel("", SwingConstants.CENTER);
+        errorTitle.setFont(new Font("Arial", Font.ITALIC, 12));
+        errorTitle.setForeground(Color.RED);
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        gbc.gridwidth = 2; // Span across two columns
+        panel.add(errorTitle, gbc);
 
+        // Add panel to BootLoader
         BootLoader.panelContainer.add(panel, "checkin panel");
         BootLoader.cardLayout.show(BootLoader.panelContainer, "checkin panel");
-        BootLoader.loginFrame.setSize(400, 400);
+        BootLoader.loginFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         // Action listeners
-        backB.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        inputArea.setText("");
-                        errorTitle.setText("");
-                        MainPage.backToMain();
-                    }
-                }
-        );
+        backB.addActionListener(e -> {
+            inputField.setText("");
+            errorTitle.setText("");
+            MainPage.backToMain();
+        });
 
-        enterB.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        String response = checkin(inputArea.getText());
-                        if (response.equals("success")) {
-                            inputArea.setText("");
-                            showConfirmation("Check-in complete! Have a great workout.");
-                        } else if (response.equals("alert")) {
-                            alert_init();
-                        } else {
-                            errorTitle.setText(response);
-                        }
-                    }
-                }
-        );
+        enterB.addActionListener(e -> {
+            String response = checkin(inputField.getText().trim());
+            if (response.equals("success")) {
+                inputField.setText("");
+                showConfirmation("Check-in complete! Have a great workout.");
+            } else if (response.equals("alert")) {
+                alert_init();
+            } else {
+                errorTitle.setText(response);
+            }
+        });
     }
+
 
     /**
      * Displays the alert GUI for memberships expiring within 30 days.
      */
     public static void alert_init() {
-        JPanel panel = new JPanel();
-        panel.setLayout(null);
+        JPanel panel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
 
-        JLabel textLabel = new JLabel("ALERT: This member's membership expires within 30 days.");
-        textLabel.setBounds(25, 50, 350, 25);
+        // Alert Label
+        JLabel textLabel = new JLabel("ALERT: This member's membership expires within 30 days.", SwingConstants.CENTER);
+        textLabel.setFont(new Font("Arial", Font.BOLD, 14));
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        panel.add(textLabel, gbc);
 
+        // Next Button
         JButton nextButton = new JButton("Next");
-        nextButton.setBounds(150, 100, 100, 30);
+        gbc.gridy = 1;
+        panel.add(nextButton, gbc);
 
-        panel.add(textLabel);
-        panel.add(nextButton);
         BootLoader.panelContainer.add(panel, "alert panel");
         BootLoader.cardLayout.show(BootLoader.panelContainer, "alert panel");
-        BootLoader.loginFrame.setSize(400, 400);
+        BootLoader.loginFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
-        nextButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                MainPage.backToMain();
-            }
-        });
+        nextButton.addActionListener(e -> MainPage.backToMain());
     }
 
     /**
@@ -157,26 +181,27 @@ public class CheckinMember {
      * @param message The confirmation message to display.
      */
     public static void showConfirmation(String message) {
-        JPanel panel = new JPanel();
-        panel.setLayout(null);
+        JPanel panel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
 
-        JLabel textLabel = new JLabel(message);
-        textLabel.setBounds(25, 50, 350, 25);
+        // Confirmation Label
+        JLabel textLabel = new JLabel(message, SwingConstants.CENTER);
+        textLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        panel.add(textLabel, gbc);
 
+        // Next Button
         JButton nextButton = new JButton("Next");
-        nextButton.setBounds(150, 100, 100, 30);
+        gbc.gridy = 1;
+        panel.add(nextButton, gbc);
 
-        panel.add(textLabel);
-        panel.add(nextButton);
         BootLoader.panelContainer.add(panel, "confirmation panel");
         BootLoader.cardLayout.show(BootLoader.panelContainer, "confirmation panel");
-        BootLoader.loginFrame.setSize(400, 400);
+        BootLoader.loginFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
-        nextButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                MainPage.backToMain();
-            }
-        });
+
+        nextButton.addActionListener(e -> MainPage.backToMain());
     }
 }

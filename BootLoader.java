@@ -18,7 +18,7 @@ public class BootLoader {
     public static void main(String[] args) {
         loginFrame = new JFrame("SoftHealth Login");
         loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        loginFrame.setSize(800, 800);
+        loginFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         loginFrame.add(panelContainer);
         bootup_init();
         loginFrame.setVisible(true);
@@ -32,24 +32,28 @@ public class BootLoader {
      */
     public static String getUserRole(String memberID) {
         String sql = "SELECT role FROM Staff WHERE member_id = ?";
-
         try (Connection conn = DatabaseConnection.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, memberID);
+            System.out.println("Executing query: " + pstmt.toString());
 
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
-                    return rs.getString("role"); // Return the role if found
+                    String role = rs.getString("role");
+                    System.out.println("Role found: " + role);
+                    return role; // Return the role if found
+                } else {
+                    System.out.println("No role found for member ID: " + memberID);
                 }
             }
         } catch (SQLException e) {
             System.out.println("Error while retrieving user role.");
             e.printStackTrace();
         }
-
         return null; // Return null if no role found
     }
+
 
     /**
      * Verifies if the member_id exists in the Staff table.
@@ -71,11 +75,11 @@ public class BootLoader {
         gbc.insets = new Insets(10, 10, 10, 10); // Add padding around components
 
         JLabel softengTitle = new JLabel("Softeng Health Club Login");
-        JLabel subTitle = new JLabel("Please enter UserID:");
+        JLabel subTitle = new JLabel("Please enter memberID:");
         JTextField inputArea = new JTextField(); // Create the text box
         JButton enterB = new JButton("Enter");
         JLabel errorTitle = new JLabel();
-        loginFrame.setSize(800, 800);
+        loginFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         // Set preferred size for the text box to make it visually balanced
         inputArea.setPreferredSize(new Dimension(200, 30)); // Width = 200, Height = 30
