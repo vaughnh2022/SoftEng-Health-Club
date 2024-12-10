@@ -9,6 +9,7 @@ import java.sql.SQLException;
 
 public class SearchMember extends Staff {
 
+
     /**
      * Finds all members by their member ID, first name, or last name and returns their details in a table-compatible format.
      */
